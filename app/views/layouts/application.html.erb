@@ -10,6 +10,35 @@
   </head>
 
   <body>
+    <% if !user_signed_in? %>
+  <%= link_to "Signin", new_user_session_path %>
+  <%= link_to 'Signin with Google', user_google_oauth2_omniauth_authorize_path %>
+  <%= link_to "Signup", new_user_registration_path %>
+  <% else %>
+  <%= link_to "Signout", destroy_user_session_path, method: :delete %>
+  Signed in as: <%= link_to current_user.email, edit_user_registration_path(current_user) %>
+  <% if current_user.name %>
+  <%= current_user.name %>
+  <% end %>
+  <% end %>
+  <% if notice %>
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">close</span>
+    </button>
+    <%= notice %>
+   </div>
+   <% end %>
+   <% if alert %>
+<div class="alert alert-danger alert-dismissible" role="alert">
+<button type="button" class="close" data-dismiss="alert">
+ <span aria-hidden="true">&times;</span>
+ <span class="sr-only">close</span>
+</button>
+<%= alert %>
+</div>
+<% end %>
     <%= yield %>
   </body>
 </html>
